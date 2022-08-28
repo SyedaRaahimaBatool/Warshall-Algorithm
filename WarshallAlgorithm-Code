@@ -1,0 +1,58 @@
+using System;
+
+namespace WarshallAlgorithm
+{
+    class Class1
+    {
+        static int Num = 4;
+
+        void TransitiveProperty(int[,] graph)
+        {
+
+            int[,] binary_num = new int[Num, Num];
+            int x, y, z;
+
+            for (x = 0; x < Num; x++)
+                for (y = 0; y < Num; y++)
+                    binary_num[x, y] = graph[x, y];
+
+
+            for (z = 0; z < Num; z++)
+            {
+                for (x = 0; x < Num; x++)
+                {
+                    for (y = 0; y < Num; y++)
+                    {
+                        binary_num[x, y] = (binary_num[x, y] != 0) ||
+                                     ((binary_num[x, z] != 0) &&
+                                      (binary_num[z, y] != 0)) ? 1 : 0;
+                    }
+                }
+            }
+
+            ReturnMatrix(binary_num);
+        }
+
+        void ReturnMatrix(int[,] binary_num)
+        {
+            Console.WriteLine("Transitive" +
+                              " closure of the given graph in Matrix is");
+            for (int i = 0; i < Num; i++)
+            {
+                for (int j = 0; j < Num; j++)
+                    Console.Write(binary_num[i, j] + " ");
+                Console.WriteLine();
+            }
+        }
+        public static void Main(string[] args)
+        {
+            int[,] graph = new int[,]{{0, 1, 0, 1},
+                                  {1, 0, 1, 0},
+                                  {1, 0, 1, 1},
+                                  {0, 0, 0, 1}};
+
+            Class1 W = new Class1();
+            W.TransitiveProperty(graph);
+        }
+    }
+}
